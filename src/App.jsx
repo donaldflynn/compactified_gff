@@ -6,6 +6,8 @@ import Controls from './components/Controls';
 import { generateRandomCoeffs, computeGFF, selectWindingSector } from './math/gff';
 import './App.css';
 
+// Main application component
+
 export default function App() {
   const [panelOpen, setPanelOpen] = useState(true);
   const [params, setParams] = useState({
