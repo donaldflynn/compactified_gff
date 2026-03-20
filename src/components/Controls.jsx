@@ -1,3 +1,33 @@
+function Slider({ label, value, min, max, step, onChange }) {
+  return (
+    <label className="slider-row">
+      <span className="slider-label">
+        {label} ={' '}
+        <input
+          type="number"
+          className="slider-number"
+          value={value}
+          min={min}
+          max={max}
+          step={step}
+          onChange={(e) => {
+            const v = parseFloat(e.target.value);
+            if (!isNaN(v)) onChange(v);
+          }}
+        />
+      </span>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(+e.target.value)}
+      />
+    </label>
+  );
+}
+
 export default function Controls({
   params,
   setParams,
@@ -20,69 +50,54 @@ export default function Controls({
 
       <div className="control-group">
         <h3>Torus Modulus &tau; = &tau;&#x2081; + i&tau;&#x2082;</h3>
-        <label>
-          &tau;&#x2081; = {params.tau1.toFixed(2)}
-          <input
-            type="range"
-            min="-2"
-            max="2"
-            step="0.01"
-            value={params.tau1}
-            onChange={(e) => update('tau1', +e.target.value)}
-          />
-        </label>
-        <label>
-          &tau;&#x2082; = {params.tau2.toFixed(2)}
-          <input
-            type="range"
-            min="0.1"
-            max="3"
-            step="0.01"
-            value={params.tau2}
-            onChange={(e) => update('tau2', +e.target.value)}
-          />
-        </label>
+        <Slider
+          label={<>&tau;&#x2081;</>}
+          value={params.tau1}
+          min={-2}
+          max={2}
+          step={0.01}
+          onChange={(v) => update('tau1', v)}
+        />
+        <Slider
+          label={<>&tau;&#x2082;</>}
+          value={params.tau2}
+          min={0.1}
+          max={3}
+          step={0.01}
+          onChange={(v) => update('tau2', v)}
+        />
       </div>
 
       <div className="control-group">
         <h3>Compactification</h3>
-        <label>
-          r = {params.r.toFixed(2)}
-          <input
-            type="range"
-            min="0.1"
-            max="5"
-            step="0.01"
-            value={params.r}
-            onChange={(e) => update('r', +e.target.value)}
-          />
-        </label>
-        <label>
-          g&#x2080; = {params.g0.toFixed(2)}
-          <input
-            type="range"
-            min="0.1"
-            max="10"
-            step="0.01"
-            value={params.g0}
-            onChange={(e) => update('g0', +e.target.value)}
-          />
-        </label>
+        <Slider
+          label="r"
+          value={params.r}
+          min={0.1}
+          max={5}
+          step={0.01}
+          onChange={(v) => update('r', v)}
+        />
+        <Slider
+          label={<>g&#x2080;</>}
+          value={params.g0}
+          min={0.1}
+          max={10}
+          step={0.01}
+          onChange={(v) => update('g0', v)}
+        />
       </div>
 
       <div className="control-group">
         <h3>Display</h3>
-        <label>
-          Height scale = {params.heightScale.toFixed(3)}
-          <input
-            type="range"
-            min="0.005"
-            max="0.5"
-            step="0.005"
-            value={params.heightScale}
-            onChange={(e) => update('heightScale', +e.target.value)}
-          />
-        </label>
+        <Slider
+          label="Height scale"
+          value={params.heightScale}
+          min={0.005}
+          max={0.5}
+          step={0.005}
+          onChange={(v) => update('heightScale', v)}
+        />
         <label>
           Grid:{' '}
           <select
@@ -140,17 +155,14 @@ export default function Controls({
           Tile &beta; direction
         </label>
         {(params.stackPhi || params.tileAlpha || params.tileBeta) && (
-          <label>
-            Copies per side = {params.copies}
-            <input
-              type="range"
-              min="1"
-              max="4"
-              step="1"
-              value={params.copies}
-              onChange={(e) => update('copies', +e.target.value)}
-            />
-          </label>
+          <Slider
+            label="Copies per side"
+            value={params.copies}
+            min={1}
+            max={4}
+            step={1}
+            onChange={(v) => update('copies', v)}
+          />
         )}
       </div>
 
