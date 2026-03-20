@@ -7,6 +7,7 @@ import { generateRandomCoeffs, computeGFF, selectWindingSector } from './math/gf
 import './App.css';
 
 export default function App() {
+  const [panelOpen, setPanelOpen] = useState(true);
   const [params, setParams] = useState({
     tau1: 0,
     tau2: 1,
@@ -14,7 +15,6 @@ export default function App() {
     g0: 5,
     N: 64,
     heightScale: 0.1,
-    showWinding: true,
     modHeight: true,
     stackPhi: false,
     tileAlpha: false,
@@ -59,6 +59,13 @@ export default function App() {
 
   return (
     <div className="app">
+      <button
+        className="panel-toggle"
+        onClick={() => setPanelOpen((v) => !v)}
+        aria-label={panelOpen ? 'Hide controls' : 'Show controls'}
+      >
+        {panelOpen ? '\u00AB' : '\u00BB'}
+      </button>
       <Controls
         params={params}
         setParams={setParams}
@@ -69,6 +76,7 @@ export default function App() {
         setManualWinding={setManualWinding}
         setWindingM={setWindingM}
         setWindingN={setWindingN}
+        open={panelOpen}
       />
       <div className="canvas-container">
         <Canvas camera={{ position: [1.5, 1.2, 1.5], fov: 50 }}>
@@ -85,7 +93,7 @@ export default function App() {
             m={m}
             n={n}
             heightScale={params.heightScale}
-            showWinding={params.showWinding}
+            showWinding={true}
             modHeight={params.modHeight}
             stackPhi={params.stackPhi}
             tileAlpha={params.tileAlpha}

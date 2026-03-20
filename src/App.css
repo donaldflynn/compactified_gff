@@ -7,6 +7,34 @@
   color: #e0e0e0;
 }
 
+.panel-toggle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 20;
+  width: 32px;
+  height: 32px;
+  background: #16213e;
+  color: #7ec8e3;
+  border: 1px solid #2a3a5c;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.25s ease;
+}
+
+.panel-toggle:hover {
+  background: #1a4a7a;
+}
+
+.app:has(.controls:not(.controls-hidden)) .panel-toggle {
+  left: 288px;
+}
+
 .controls {
   width: 280px;
   min-width: 280px;
@@ -14,6 +42,13 @@
   padding: 16px;
   overflow-y: auto;
   border-right: 1px solid #2a3a5c;
+  transition: margin-left 0.25s ease, opacity 0.25s ease;
+}
+
+.controls-hidden {
+  margin-left: -280px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .controls h2 {
@@ -181,4 +216,18 @@
 .canvas-container {
   flex: 1;
   position: relative;
+}
+
+@media (max-width: 600px) {
+  .controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  .controls-hidden {
+    margin-left: -280px;
+  }
 }

@@ -38,11 +38,12 @@ export default function Controls({
   setManualWinding,
   setWindingM,
   setWindingN,
+  open,
 }) {
   const update = (key, value) => setParams((p) => ({ ...p, [key]: value }));
 
   return (
-    <div className="controls">
+    <div className={`controls ${open ? '' : 'controls-hidden'}`}>
       <h2>Compactified GFF on a Torus</h2>
       <p className="subtitle">
         Compact boson on <span className="math">C/(Z + &tau;Z)</span>
@@ -112,18 +113,10 @@ export default function Controls({
         <label className="checkbox-label">
           <input
             type="checkbox"
-            checked={params.showWinding}
-            onChange={(e) => update('showWinding', e.target.checked)}
+            checked={!params.modHeight}
+            onChange={(e) => update('modHeight', !e.target.checked)}
           />
-          Include winding sector
-        </label>
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            checked={params.modHeight}
-            onChange={(e) => update('modHeight', e.target.checked)}
-          />
-          Height mod 2&pi;r
+          Display uncompactified field
         </label>
       </div>
 
